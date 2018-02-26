@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.group14.events_near_me.MapActivity">
 
+    <TextView
+        android:id="@+id/testText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"/>
+
 </android.support.constraint.ConstraintLayout>
