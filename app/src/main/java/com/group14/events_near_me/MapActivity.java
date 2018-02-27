@@ -12,7 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment;
  */
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-    FirebaseController database;
+    private FirebaseController database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

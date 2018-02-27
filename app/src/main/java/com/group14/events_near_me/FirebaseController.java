@@ -12,9 +12,9 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class FirebaseController {
-    FirebaseAuth firebaseAuth;
-    FirebaseDatabase database;
-    DatabaseReference ref;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
 
     public FirebaseController() {
         firebaseAuth = FirebaseAuth.getInstance();
