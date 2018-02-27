@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1015151114131:android:7313b1aaae81417e",
         "android_client_info": {
-          "package_name": "com.example.group14.events_near_me"
+          "package_name": "com.group14.events_near_me"
         }
       },
       "oauth_client": [
@@ -26,7 +26,7 @@
           "client_id": "1015151114131-ujq8emqj1e8grb3j6o60as7a9cm46kku.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.group14.events_near_me",
+            "package_name": "com.group14.events_near_me",
             "certificate_hash": "4a74455f3c61bc139edf240afdef854a5aa54dee"
           }
         }

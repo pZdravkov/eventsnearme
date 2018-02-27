@@ -1,4 +1,4 @@
-package com.example.group14.events_near_me;
+package com.group14.events_near_me;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

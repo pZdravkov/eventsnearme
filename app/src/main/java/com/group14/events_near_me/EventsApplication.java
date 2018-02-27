@@ -1,4 +1,4 @@
-package com.example.group14.events_near_me;
+package com.group14.events_near_me;
 
 import android.app.Application;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.example.group14.events_near_me;
+package com.group14.events_near_me;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.group14.events_near_me", appContext.getPackageName());
+        assertEquals("com.group14.events_near_me", appContext.getPackageName());
     }
 }
