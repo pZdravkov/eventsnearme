@@ -1,7 +1,10 @@
 package com.group14.events_near_me;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -14,23 +17,37 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class EventsApplication extends Application {
     private GoogleSignInClient googleClient;
-    private FirebaseController database;
+    private FirebaseController firebase;
+    private GoogleSignInAccount account;
     @Override
     public void onCreate() {
         super.onCreate();
 
-        database = new FirebaseController();
+        firebase = new FirebaseController();
         GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
                 .requestProfile()
                 .build();
         googleClient = GoogleSignIn.getClient(this, options);
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
-            database.authenticate(account);
-            Intent intent = new Intent(this, MapActivity.class);
-            startActivity(intent);
+            firebase.authenticate(account);
+
+            // check shared preferences for user id
+            SharedPreferences preferences = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE);
+            if (preferences.contains(getString(R.string.preference_id_key))) {
+                // if preference exists user already has an account go to main map
+                firebase.setCurrentUserId(preferences.getString(getString(R.string.preference_id_key), ""));
+
+                Intent intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
+            } else {
+                // user has authenticated but does not have an account
+                Intent intent = new Intent(this, SignInActivity.class);
+                intent.putExtra("isAuthenticated", true);
+                startActivity(intent);
+            }
         } else {
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
@@ -42,6 +59,10 @@ public class EventsApplication extends Application {
     }
 
     public FirebaseController getDatabase() {
-        return database;
+        return firebase;
+    }
+
+    public GoogleSignInAccount getAccount() {
+        return account;
     }
 }
