@@ -20,10 +20,11 @@ import com.google.firebase.database.ValueEventListener;
  * Created by Ben on 26/02/2018.
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener, ChildEventListener {
-    FirebaseController firebase;
-    GoogleMap map;
 
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener, ChildEventListener {
+    private FirebaseController database;
+    private GoogleMap map;
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
