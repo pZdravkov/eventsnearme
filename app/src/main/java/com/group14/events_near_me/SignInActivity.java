@@ -85,7 +85,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
      * The method enables extra personal details to be shared by the user. After
      * the Google authentication is complete, the invisible elements are made visible
      * which allows the user to select his age and gender. A confirm button to send
-     * the data to Firebase is made visible as well. The Google sign-in button is
+     * the data to FireBase is made visible as well. The Google sign-in button is
      * hidden and disabled.
      */
     private void setupDetailsEntry() {
