@@ -10,10 +10,26 @@
       "client_info": {
         "mobilesdk_app_id": "1:1015151114131:android:7313b1aaae81417e",
         "android_client_info": {
-          "package_name": "com.group14.events_near_me"
+          "package_name": "com.example.group14.events_near_me"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1015151114131-l031utremh16i9ccqu2282ondom5hhrn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.group14.events_near_me",
+            "certificate_hash": "068178351b52cb99080a9d81dc1d9a3124cea390"
+          }
+        },
+        {
+          "client_id": "1015151114131-uhra8vobf4lebfp8unj4pvtl9e4hrvn0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.group14.events_near_me",
+            "certificate_hash": "4a74455f3c61bc139edf240afdef854a5aa54dee"
+          }
+        },
         {
           "client_id": "1015151114131-lpdbapueb0k324quu11eiaa3gsrho5li.apps.googleusercontent.com",
           "client_type": 3
@@ -21,14 +37,54 @@
         {
           "client_id": "1015151114131-1f3luibfmvof6koo7mhj8dkee12hrv1h.apps.googleusercontent.com",
           "client_type": 3
-        },
+        }
+      ],
+      "api_key": [
         {
-          "client_id": "1015151114131-ujq8emqj1e8grb3j6o60as7a9cm46kku.apps.googleusercontent.com",
+          "current_key": "AIzaSyD5ufmCBxdnElftYBR8_gyMvY3P9RsBvlU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015151114131-lpdbapueb0k324quu11eiaa3gsrho5li.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015151114131:android:ee845b49b2a9f80b",
+        "android_client_info": {
+          "package_name": "com.group14.events_near_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015151114131-8vfcrag8tfm5197ulpm1t28do15btc6h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.group14.events_near_me",
-            "certificate_hash": "4a74455f3c61bc139edf240afdef854a5aa54dee"
+            "certificate_hash": "068178351b52cb99080a9d81dc1d9a3124cea390"
           }
+        },
+        {
+          "client_id": "1015151114131-lpdbapueb0k324quu11eiaa3gsrho5li.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1015151114131-1f3luibfmvof6koo7mhj8dkee12hrv1h.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [

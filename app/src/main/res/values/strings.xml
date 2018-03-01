@@ -4,4 +4,7 @@
     <string name="google_maps_api_key">AIzaSyCdo5Qfjow-2sFjfRILgPP8Bwk7paT9Hzo</string>
     <string name="preference_file_name">enmsharedprefs</string>
     <string name="preference_id_key">userID</string>
+    <string name="signin_activity_welcome_msg">Welcome to</string>
+    <string name="title">EvenTribute</string>
+    <string name="singin_activity_age_msg">Select Your Age:</string>
 </resources>

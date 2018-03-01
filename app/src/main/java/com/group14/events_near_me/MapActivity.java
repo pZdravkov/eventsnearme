@@ -30,7 +30,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        firebase = ((EventsApplication)this.getApplication()).getDatabase();
+        database = ((EventsApplication)this.getApplication()).getDatabase();
 
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -41,20 +41,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map = googleMap;
         map.setOnMapClickListener(this);
         map.setOnMarkerClickListener(this);
-        firebase.getRoot().child("events").addChildEventListener(this);
+        database.getRoot().child("events").addChildEventListener(this);
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
         Log.d("MyDebug", "clicked on map");
-        String s = firebase.getDatabase().getReference().child("events").push().getKey();
-        firebase.getRoot().child("events").child(s).setValue(new Event((float)latLng.latitude, (float)latLng.longitude, System.nanoTime(), firebase.getCurrentUserId()));
+        String s = database.getDatabase().getReference().child("events").push().getKey();
+        database.getRoot().child("events").child(s).setValue(new Event((float)latLng.latitude, (float)latLng.longitude, System.nanoTime(), database.getCurrentUserId()));
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         marker.remove();
-        firebase.getDatabase().getReference("/events/" + marker.getTitle()).removeValue();
+        database.getDatabase().getReference("/events/" + marker.getTitle()).removeValue();
         return true;
     }
 

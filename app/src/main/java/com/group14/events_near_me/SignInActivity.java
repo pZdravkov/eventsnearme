@@ -77,20 +77,32 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 setupDetailsEntry();
             } catch (ApiException e) {
                 e.printStackTrace();
-                ((TextView)findViewById(R.id.testText)).setText("Error");
             }
         }
     }
 
+    /**
+     * The method enables extra personal details to be shared by the user. After
+     * the Google authentication is complete, the invisible elements are made visible
+     * which allows the user to select his age and gender. A confirm button to send
+     * the data to FireBase is made visible as well. The Google sign-in button is
+     * hidden and disabled
+     */
     private void setupDetailsEntry() {
         findViewById(R.id.ageText).setVisibility(View.VISIBLE);
+
+        // Create a number picker for the age with values between 1 and 100.
         NumberPicker numberPicker = (NumberPicker)findViewById(R.id.ageSelect);
         numberPicker.setVisibility(View.VISIBLE);
-        numberPicker.setMinValue(0);
+        numberPicker.setMinValue(1);
         numberPicker.setMaxValue(100);
+
         findViewById(R.id.genderText).setVisibility(View.VISIBLE);
         findViewById(R.id.genderSelect).setVisibility(View.VISIBLE);
         findViewById(R.id.confirmDetails).setVisibility(View.VISIBLE);
+
+        // Hide and disable the Google sing-in button.
         findViewById(R.id.sign_in_button).setEnabled(false);
+        findViewById(R.id.sign_in_button).setVisibility(View.INVISIBLE);
     }
 }
