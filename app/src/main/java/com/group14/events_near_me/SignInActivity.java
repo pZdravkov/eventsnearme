@@ -86,7 +86,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
      * the Google authentication is complete, the invisible elements are made visible
      * which allows the user to select his age and gender. A confirm button to send
      * the data to FireBase is made visible as well. The Google sign-in button is
-     * hidden and disabled.
+     * hidden and disabled
      */
     private void setupDetailsEntry() {
         findViewById(R.id.ageText).setVisibility(View.VISIBLE);
