@@ -16,11 +16,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 /**
  * Created by Ben on 26/02/2018.
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener, ChildEventListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener,
+        GoogleMap.OnMarkerClickListener, ChildEventListener {
     FirebaseController firebase;
     GoogleMap map;
 
@@ -47,7 +50,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapClick(LatLng latLng) {
         Log.d("MyDebug", "clicked on map");
         String s = firebase.getDatabase().getReference().child("events").push().getKey();
-        firebase.getRoot().child("events").child(s).setValue(new Event((float)latLng.latitude, (float)latLng.longitude, System.nanoTime(), firebase.getCurrentUserId()));
+        Calendar calendar = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.roll(Calendar.HOUR_OF_DAY, true);
+        Event event = new Event((float)latLng.latitude, (float)latLng.longitude,
+                calendar.getTimeInMillis(), calendar2.getTimeInMillis(), firebase.getCurrentUserId());
+        firebase.getRoot().child("events").child(s).setValue(event);
     }
 
     @Override

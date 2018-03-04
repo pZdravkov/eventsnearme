@@ -1,45 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.group14.events_near_me.SignInActivity">
 
-    <LinearLayout
+
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/ageText"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:weightSum="5">
+
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Age: "
-            android:visibility="invisible"/>
-        <NumberPicker
-            android:id="@+id/ageSelect"
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signin_activity_welcome_msg"
+                    android:textSize="20sp"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="35sp"
+                    android:text="@string/title"
+                    android:textStyle="bold"
+                    android:fontFamily="serif-monospace"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"/>
-        <TextView
-            android:id="@+id/genderText"
-            android:layout_width="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signin_age_select"
+                    android:visibility="invisible" />
+
+                <DatePicker
+                    android:id="@+id/dobSelect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/genderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signin_gender_select"
+                    android:visibility="invisible" />
+
+                <Switch
+                    android:id="@+id/genderSelect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:showText="true"
+                    android:textOff="@string/gender_switch_off"
+                    android:textOn="@string/gender_switch_on"/>
+            </LinearLayout>
+
+
+        </TableRow>
+
+        <TableRow
             android:layout_height="wrap_content"
-            android:text="Enter Gender: (female is ticked)"
-            android:visibility="invisible"/>
-        <CheckBox
-            android:id="@+id/genderSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"/>
-        <Button
-            android:id="@+id/confirmDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirm"
-            android:visibility="invisible"/>
-    </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/confirmDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm"
+                    android:visibility="invisible" />
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
 </android.support.constraint.ConstraintLayout>

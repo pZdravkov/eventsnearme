@@ -41,15 +41,18 @@ public class EventsApplication extends Application {
                 firebase.setCurrentUserId(preferences.getString(getString(R.string.preference_id_key), ""));
 
                 Intent intent = new Intent(this, MapActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else {
                 // user has authenticated but does not have an account
                 Intent intent = new Intent(this, SignInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("isAuthenticated", true);
                 startActivity(intent);
             }
         } else {
             Intent intent = new Intent(this, SignInActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }

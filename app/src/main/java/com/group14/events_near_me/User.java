@@ -8,18 +8,18 @@ public class User {
     public String firstName;
     public String surname;
     public boolean gender;
-    public int age;
+    public Long dateOfBirth;
     public String googleAuthToken;
 
     public User() {
 
     }
 
-    public User(String firstName, String surname, boolean gender, int age, String googleAuthToken) {
+    public User(String firstName, String surname, boolean gender, Long dateOfBirth, String googleAuthToken) {
         this.firstName = firstName;
         this.surname = surname;
         this.gender = gender;
-        this.age = age;
+        this.dateOfBirth = dateOfBirth;
         this.googleAuthToken = googleAuthToken;
     }
 }

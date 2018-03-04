@@ -20,18 +20,20 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class FirebaseController {
-    FirebaseAuth firebaseAuth;
-    FirebaseDatabase database;
-    DatabaseReference ref;
-    String currentUserId;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
+    private String currentUserId;
 
     public FirebaseController() {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://com2027-group14-1519651413217.firebaseio.com/");
         ref = database.getReference();
+        database.setPersistenceEnabled(true);
     }
 
     public void authenticate(GoogleSignInAccount acct) {
+        Log.d("MyDebug", acct.getIdToken());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential);
     }

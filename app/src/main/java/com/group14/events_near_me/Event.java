@@ -8,16 +8,18 @@ public class Event {
     public float lat;
     public float lng;
     public Long startTime;
+    public Long endTime;
     public String ownerID;
 
     public Event() {
 
     }
 
-    public Event(float lat, float lng, Long startTime, String ownerID) {
+    public Event(float lat, float lng, Long startTime, Long endTime, String ownerID) {
         this.lat = lat;
         this.lng = lng;
         this.startTime = startTime;
+        this.endTime = endTime;
         this.ownerID = ownerID;
     }
 }
