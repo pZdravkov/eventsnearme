@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -40,7 +39,7 @@ public class EventsApplication extends Application {
                 // if preference exists user already has an account go to main map
                 firebase.setCurrentUserId(preferences.getString(getString(R.string.preference_id_key), ""));
 
-                Intent intent = new Intent(this, MapActivity.class);
+                Intent intent = new Intent(this, ListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else {

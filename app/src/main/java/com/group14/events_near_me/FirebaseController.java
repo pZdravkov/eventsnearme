@@ -28,8 +28,8 @@ public class FirebaseController {
     public FirebaseController() {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://com2027-group14-1519651413217.firebaseio.com/");
-        ref = database.getReference();
         database.setPersistenceEnabled(true);
+        ref = database.getReference();
     }
 
     public void authenticate(GoogleSignInAccount acct) {

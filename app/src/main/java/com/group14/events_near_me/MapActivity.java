@@ -1,9 +1,11 @@
 package com.group14.events_near_me;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -14,7 +16,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -23,9 +24,10 @@ import java.util.Calendar;
  */
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener,
-        GoogleMap.OnMarkerClickListener, ChildEventListener {
-    FirebaseController firebase;
-    GoogleMap map;
+        GoogleMap.OnMarkerClickListener, ChildEventListener, GestureDetector.OnGestureListener {
+    private FirebaseController firebase;
+    private GoogleMap map;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        gestureDetector = new GestureDetector(this, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        firebase.getRoot().child("events").removeEventListener(this);
     }
 
     @Override
@@ -105,5 +115,48 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onCancelled(DatabaseError databaseError) {
         Log.w("MyDebug", "postComments:onCancelled", databaseError.toException());
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        if (motionEvent.getRawX() > motionEvent1.getRawX()) {
+            Intent intent = new Intent(this, ListActivity.class);
+            startActivity(intent);
+            finish();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        return gestureDetector.onTouchEvent(e);
     }
 }
