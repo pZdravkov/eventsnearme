@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/eventsnearme.iml" filepath="$PROJECT_DIR$/.idea/eventsnearme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eventsnearme.iml" filepath="$PROJECT_DIR$/eventsnearme.iml" />
+      <module fileurl="file://C:\Users\Petar Zdravkov\StudioProjects\eventsnearme\.idea\eventsnearme.iml" filepath="C:\Users\Petar Zdravkov\StudioProjects\eventsnearme\.idea\eventsnearme.iml" />
     </modules>
   </component>
 </project>
