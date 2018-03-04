@@ -64,6 +64,7 @@
                     android:id="@+id/ageText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:text="@string/singin_activity_age_msg"
                     android:visibility="invisible" />
 
