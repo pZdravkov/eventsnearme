@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Ben on 26/02/2018.
+ *
+ * This class controls the connection with firebase, and serves references to the application
  */
 
 public class FirebaseController {
@@ -33,7 +35,6 @@ public class FirebaseController {
     }
 
     public void authenticate(GoogleSignInAccount acct) {
-        Log.d("MyDebug", acct.getIdToken());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential);
     }

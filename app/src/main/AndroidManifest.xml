@@ -25,7 +25,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".MapActivity" />
-        <activity android:name=".ListActivity"></activity>
+        <activity android:name=".ListActivity" />
+        <activity
+            android:name=".event_view.EventViewActivity"
+            android:label="@string/title_activity_event_view"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListActivity" />
+        </activity>
     </application>
 
 </manifest>
