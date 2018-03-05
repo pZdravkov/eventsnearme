@@ -2,6 +2,8 @@ package com.group14.events_near_me;
 
 /**
  * Created by Ben on 05/03/2018.
+ *
+ * data storage class for a comment
  */
 
 public class Comment {

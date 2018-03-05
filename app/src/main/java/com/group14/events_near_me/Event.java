@@ -2,6 +2,8 @@ package com.group14.events_near_me;
 
 /**
  * Created by Ben on 28/02/2018.
+ *
+ * data storage class for an event
  */
 
 public class Event {

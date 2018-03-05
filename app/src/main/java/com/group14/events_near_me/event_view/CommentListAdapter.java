@@ -20,6 +20,8 @@ import java.util.Locale;
 
 /**
  * Created by Ben on 04/03/2018.
+ *
+ * this adapter is used in the comments list of the event view activity.
  */
 
 public class CommentListAdapter extends ArrayAdapter<Comment> {
@@ -38,6 +40,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         View row;
+        // if we're being given an existing row to repopulate use that, otherwise inflate a new row
         if (convertView != null) {
             row = convertView;
         } else {
@@ -46,10 +49,11 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
         Comment comment = comments.get(position);
 
-
+        // set comment text and body
         ((TextView)row.findViewById(R.id.discussionName)).setText(comment.userID);
         ((TextView)row.findViewById(R.id.discussionText)).setText(comment.body);
 
+        // convert time, stored in milliseconds, into a readable form
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.UK);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(comment.timestamp);

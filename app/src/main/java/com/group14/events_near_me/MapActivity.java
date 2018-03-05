@@ -21,6 +21,8 @@ import java.util.Calendar;
 
 /**
  * Created by Ben on 26/02/2018.
+ *
+ * displays events on a map
  */
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener,
@@ -36,6 +38,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         firebase = ((EventsApplication)this.getApplication()).getFirebaseController();
 
+        // start the background task of getting a google map
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -53,11 +56,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map = googleMap;
         map.setOnMapClickListener(this);
         map.setOnMarkerClickListener(this);
+        // when the map is ready get events to add to it
         firebase.getRoot().child("events").addChildEventListener(this);
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
+        // when the user clicks on the map in an empty spot create an event there
+        // TODO change this, it's just for testing
         Log.d("MyDebug", "clicked on map");
         String key = firebase.getDatabase().getReference().child("events").push().getKey();
         Calendar calendar = Calendar.getInstance();
@@ -70,6 +76,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        // when the user clicks a marker for an event delete the event
+        // TODO change this, it's just for testing
         marker.remove();
         firebase.getDatabase().getReference("/events/" + marker.getTitle()).removeValue();
         return true;
@@ -82,11 +90,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Event event = dataSnapshot.getValue(Event.class);
         Log.d("MyDebug", event.lat + ", " + event.lng);
 
+        // create a marker for the event and add it to the map
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(event.lat, event.lng));
         markerOptions.title(dataSnapshot.getKey());
         map.addMarker(markerOptions);
     }
+
+    // TODO support when events are changed and removed, probably with an arraylist of the markers
 
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
@@ -144,6 +155,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        // when the user swipes right go to the list view
+        // TODO add transition animation
         if (motionEvent.getRawX() > motionEvent1.getRawX()) {
             Intent intent = new Intent(this, ListActivity.class);
             startActivity(intent);
