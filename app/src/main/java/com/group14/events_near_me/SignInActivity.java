@@ -57,7 +57,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 dateOfBirth.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
 
                 User user = new User(account.getGivenName(), account.getFamilyName(), gender, dateOfBirth.getTimeInMillis(), account.getIdToken());
-                String userID = ((EventsApplication)this.getApplication()).getDatabase().addUser(user);
+                String userID = ((EventsApplication)this.getApplication()).getFirebaseController().addUser(user);
                 // write userID to shared preferences
                 SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE).edit();
                 editor.putString(getString(R.string.preference_id_key), userID);
@@ -77,7 +77,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 account = task.getResult(ApiException.class);
-                ((EventsApplication)this.getApplication()).getDatabase().authenticate(account);
+                ((EventsApplication)this.getApplication()).getFirebaseController().authenticate(account);
 
                 setupDetailsEntry();
             } catch (ApiException e) {

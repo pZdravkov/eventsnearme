@@ -33,7 +33,6 @@ public class FirebaseController {
     }
 
     public void authenticate(GoogleSignInAccount acct) {
-        Log.d("MyDebug", acct.getIdToken());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential);
     }

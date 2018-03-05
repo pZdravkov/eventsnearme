@@ -60,7 +60,7 @@ public class EventsApplication extends Application {
         return googleClient;
     }
 
-    public FirebaseController getDatabase() {
+    public FirebaseController getFirebaseController() {
         return firebase;
     }
 

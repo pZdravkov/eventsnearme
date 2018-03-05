@@ -2,6 +2,7 @@ package com.group14.events_near_me;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +12,25 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by Ben on 04/03/2018.
  */
 
-public class EventListAdapter extends ArrayAdapter<Event> {
+public class EventListAdapter extends ArrayAdapter<String> {
     private Context context;
-    private ArrayList<Event> events;
+    private HashMap<String, Event> events;
+    private ArrayList<String> eventNames;
     private int layoutResourceId;
 
-    public EventListAdapter(Context context, int layoutResourceId, ArrayList<Event> events) {
-        super(context, layoutResourceId, events);
+    public EventListAdapter(Context context, int layoutResourceId, ArrayList<String> eventNames, HashMap<String, Event> events) {
+        super(context, layoutResourceId, eventNames);
         this.context = context;
         this.events = events;
+        this.eventNames = eventNames;
         this.layoutResourceId = layoutResourceId;
     }
 
@@ -39,7 +44,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
             row = inflater.inflate(layoutResourceId, parent, false);
         }
 
-        Event e = events.get(position);
+        Event e = events.get(eventNames.get(position));
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.UK);
 

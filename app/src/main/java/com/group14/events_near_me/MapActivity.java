@@ -34,7 +34,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        firebase = ((EventsApplication)this.getApplication()).getDatabase();
+        firebase = ((EventsApplication)this.getApplication()).getFirebaseController();
 
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -59,13 +59,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(LatLng latLng) {
         Log.d("MyDebug", "clicked on map");
-        String s = firebase.getDatabase().getReference().child("events").push().getKey();
+        String key = firebase.getDatabase().getReference().child("events").push().getKey();
         Calendar calendar = Calendar.getInstance();
         Calendar calendar2 = Calendar.getInstance();
         calendar2.roll(Calendar.HOUR_OF_DAY, true);
         Event event = new Event((float)latLng.latitude, (float)latLng.longitude,
                 calendar.getTimeInMillis(), calendar2.getTimeInMillis(), firebase.getCurrentUserId());
-        firebase.getRoot().child("events").child(s).setValue(event);
+        firebase.getRoot().child("events").child(key).setValue(event);
     }
 
     @Override

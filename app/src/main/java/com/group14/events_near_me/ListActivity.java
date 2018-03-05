@@ -6,20 +6,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.group14.events_near_me.event_view.EventViewActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Ben on 04/03/2018.
  */
 
 public class ListActivity extends AppCompatActivity implements ChildEventListener, GestureDetector.OnGestureListener {
-    private ArrayList<Event> events = new ArrayList<>();
+    private HashMap<String, Event> events = new HashMap<>();
+    private ArrayList<String> eventNames = new ArrayList<>();
     private ListView list;
     private GestureDetector gestureDetector;
 
@@ -29,8 +34,19 @@ public class ListActivity extends AppCompatActivity implements ChildEventListene
         setContentView(R.layout.activity_events_list);
 
         list = findViewById(R.id.eventListView);
-        list.setAdapter(new EventListAdapter(this, R.layout.events_list_line, events));
-        ((EventsApplication)getApplication()).getDatabase().getRoot().child("events").addChildEventListener(this);
+        list.setAdapter(new EventListAdapter(this, R.layout.events_list_line, eventNames, events));
+        ((EventsApplication)getApplication()).getFirebaseController().getRoot().child("events").addChildEventListener(this);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String eventID = eventNames.get(i);
+                Intent intent = new Intent(ListActivity.this, EventViewActivity.class);
+                intent.putExtra("EventID", eventID);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         gestureDetector = new GestureDetector(this, this);
     }
@@ -38,7 +54,7 @@ public class ListActivity extends AppCompatActivity implements ChildEventListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((EventsApplication)getApplication()).getDatabase().getRoot().child("events").removeEventListener(this);
+        ((EventsApplication)getApplication()).getFirebaseController().getRoot().child("events").removeEventListener(this);
     }
 
     @Override
@@ -46,7 +62,8 @@ public class ListActivity extends AppCompatActivity implements ChildEventListene
         Log.d("MyDebug", "EventsList: onChildAdded:" + dataSnapshot.getKey());
 
         Event event = dataSnapshot.getValue(Event.class);
-        events.add(event);
+        events.put(dataSnapshot.getKey(), event);
+        eventNames.add(dataSnapshot.getKey());
         list.invalidateViews();
     }
 
