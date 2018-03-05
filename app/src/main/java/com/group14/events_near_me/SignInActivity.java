@@ -94,11 +94,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
      * hidden and disabled
      */
     private void setupDetailsEntry() {
-        findViewById(R.id.ageText).setVisibility(View.VISIBLE);
 
         // Create a number picker for the age with values between 1 and 100.
         findViewById(R.id.dobSelect).setVisibility(View.VISIBLE);
-        findViewById(R.id.genderText).setVisibility(View.VISIBLE);
         findViewById(R.id.genderSelect).setVisibility(View.VISIBLE);
         findViewById(R.id.confirmDetails).setVisibility(View.VISIBLE);
         findViewById(R.id.sign_in_button).setVisibility(View.GONE);
