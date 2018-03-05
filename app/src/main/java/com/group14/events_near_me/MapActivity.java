@@ -23,16 +23,18 @@ import java.util.Calendar;
  * Created by Ben on 26/02/2018.
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener, ChildEventListener {
-    private FirebaseController database;
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener,
+        GoogleMap.OnMarkerClickListener, ChildEventListener, GestureDetector.OnGestureListener {
+    private FirebaseController firebase;
     private GoogleMap map;
-  
+    private GestureDetector gestureDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        database = ((EventsApplication)this.getApplication()).getDatabase();
+        firebase = ((EventsApplication)this.getApplication()).getDatabase();
 
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -51,21 +53,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map = googleMap;
         map.setOnMapClickListener(this);
         map.setOnMarkerClickListener(this);
-        database.getRoot().child("events").addChildEventListener(this);
+        firebase.getRoot().child("events").addChildEventListener(this);
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
         Log.d("MyDebug", "clicked on map");
-
-        String s = database.getDatabase().getReference().child("events").push().getKey();
-        database.getRoot().child("events").child(s).setValue(new Event((float)latLng.latitude, (float)latLng.longitude, System.nanoTime(), database.getCurrentUserId()));
+        String s = firebase.getDatabase().getReference().child("events").push().getKey();
+        Calendar calendar = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.roll(Calendar.HOUR_OF_DAY, true);
+        Event event = new Event((float)latLng.latitude, (float)latLng.longitude,
+                calendar.getTimeInMillis(), calendar2.getTimeInMillis(), firebase.getCurrentUserId());
+        firebase.getRoot().child("events").child(s).setValue(event);
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         marker.remove();
-        database.getDatabase().getReference("/events/" + marker.getTitle()).removeValue();
+        firebase.getDatabase().getReference("/events/" + marker.getTitle()).removeValue();
         return true;
     }
 

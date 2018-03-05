@@ -97,18 +97,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.ageText).setVisibility(View.VISIBLE);
 
         // Create a number picker for the age with values between 1 and 100.
-
-        NumberPicker numberPicker = (NumberPicker)findViewById(R.id.ageSelect);
-        numberPicker.setVisibility(View.VISIBLE);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(100);
-
+        findViewById(R.id.dobSelect).setVisibility(View.VISIBLE);
         findViewById(R.id.genderText).setVisibility(View.VISIBLE);
         findViewById(R.id.genderSelect).setVisibility(View.VISIBLE);
         findViewById(R.id.confirmDetails).setVisibility(View.VISIBLE);
-
-        // Hide and disable the Google sing-in button.
-        findViewById(R.id.sign_in_button).setEnabled(false);
-        findViewById(R.id.sign_in_button).setVisibility(View.INVISIBLE);
+        findViewById(R.id.sign_in_button).setVisibility(View.GONE);
     }
 }

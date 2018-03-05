@@ -64,15 +64,16 @@
                     android:id="@+id/ageText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:text="@string/singin_activity_age_msg"
+                    android:text="@string/signin_age_select"
                     android:visibility="invisible" />
 
-                <NumberPicker
-                    android:id="@+id/ageSelect"
+                <DatePicker
+                    android:id="@+id/dobSelect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"/>
 
             </LinearLayout>
 
@@ -86,14 +87,17 @@
                     android:id="@+id/genderText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Enter Gender: (female is ticked)"
+                    android:text="@string/signin_gender_select"
                     android:visibility="invisible" />
 
-                <CheckBox
+                <Switch
                     android:id="@+id/genderSelect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:showText="true"
+                    android:textOff="@string/gender_switch_off"
+                    android:textOn="@string/gender_switch_on"/>
             </LinearLayout>
 
 
