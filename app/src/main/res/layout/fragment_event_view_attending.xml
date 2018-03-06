@@ -8,6 +8,11 @@
         android:id="@+id/textDiscussion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Attending"/>
+        android:text="Attending" />
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
