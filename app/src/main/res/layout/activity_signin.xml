@@ -52,15 +52,27 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Switch
-                android:id="@+id/genderSelect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:showText="true"
-                android:textOff="@string/gender_switch_off"
-                android:textOn="@string/gender_switch_on"
-                android:visibility="invisible" />
+            <RadioGroup
+                android:id="@+id/genderSelectGroup"
+                android:orientation="vertical"
+                android:visibility="invisible">
+                <RadioButton
+                    android:id="@+id/genderSelectMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/genderSelectFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"/>
+                <RadioButton
+                    android:id="@+id/genderSelectOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other"/>
+            </RadioGroup>
 
         </TableRow>
 

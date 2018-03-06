@@ -9,7 +9,7 @@ package com.group14.events_near_me;
 public class User {
     public String firstName;
     public String surname;
-    public boolean gender;
+    public String gender;
     public long dateOfBirth;
     public String googleAuthToken;
 
@@ -17,7 +17,7 @@ public class User {
 
     }
 
-    public User(String firstName, String surname, boolean gender, long dateOfBirth, String googleAuthToken) {
+    public User(String firstName, String surname, String gender, long dateOfBirth, String googleAuthToken) {
         this.firstName = firstName;
         this.surname = surname;
         this.gender = gender;

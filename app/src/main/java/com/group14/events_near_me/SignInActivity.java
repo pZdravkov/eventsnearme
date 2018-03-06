@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -15,6 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -25,9 +32,10 @@ import java.util.Calendar;
  * once they do that ask for extra information that google doesn't supply
  */
 
-public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener, ChildEventListener {
     private GoogleSignInClient googleClient;
     private GoogleSignInAccount account;
+    private String listenerToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +49,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         boolean isSignedIn = getIntent().getBooleanExtra("isAuthenticated", false);
         if (isSignedIn) {
             account = ((EventsApplication)getApplication()).getAccount();
-            setupDetailsEntry();
+            checkForExistingUser(account.getIdToken());
         }
     }
 
@@ -56,7 +64,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.confirmDetails:
                 // when they click to confirm details entry
-                boolean gender = ((Switch)findViewById(R.id.genderSelect)).isChecked();
+
+                // get the ID of the currently selected radio button in the genderselectgroup,
+                // then find the text of that button
+                String gender = ((RadioButton)findViewById(((RadioGroup)findViewById(R.id.genderSelectGroup))
+                        .getCheckedRadioButtonId())).getText().toString();
 
                 DatePicker datePicker = findViewById(R.id.dobSelect);
                 Calendar dateOfBirth = Calendar.getInstance();
@@ -64,11 +76,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                 // create a new user based on the data they entered
                 User user = new User(account.getGivenName(), account.getFamilyName(), gender, dateOfBirth.getTimeInMillis(), account.getIdToken());
-                String userID = ((EventsApplication)this.getApplication()).getFirebaseController().addUser(user);
-                // write userID to shared preferences
-                SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE).edit();
-                editor.putString(getString(R.string.preference_id_key), userID);
-                editor.apply();
+                ((EventsApplication)this.getApplication()).getFirebaseController().addUser(user);
 
                 Intent intent = new Intent(this, MapActivity.class);
                 finish();
@@ -87,15 +95,24 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             try {
                 // try and get the google account
                 account = task.getResult(ApiException.class);
-                ((EventsApplication)this.getApplication()).getFirebaseController().authenticate(account);
 
-                // if no error is thrown the user has authenticated so set up details entry
-                setupDetailsEntry();
+                // the user is now authenticated so we can search for a user
+                checkForExistingUser(account.getIdToken());
             } catch (ApiException e) {
                 // the user maybe pressed cancel on the authenticate screen so don't change the UI so they can do it again
                 e.printStackTrace();
             }
         }
+    }
+
+    private void checkForExistingUser(String token) {
+        ((EventsApplication)getApplication()).getFirebaseController()
+                .getRoot().child("users").orderByChild("googleAuthToken")
+                .equalTo(token).addChildEventListener(this);
+        listenerToken = token;
+
+        // set up account entry in case a user isn't found
+        setupDetailsEntry();
     }
 
     /**
@@ -106,11 +123,44 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
      * hidden and disabled
      */
     private void setupDetailsEntry() {
-
-        // Create a number picker for the age with values between 1 and 100.
         findViewById(R.id.dobSelect).setVisibility(View.VISIBLE);
-        findViewById(R.id.genderSelect).setVisibility(View.VISIBLE);
+        findViewById(R.id.genderSelectGroup).setVisibility(View.VISIBLE);
         findViewById(R.id.confirmDetails).setVisibility(View.VISIBLE);
         findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        // A user was found with our token
+        Log.d("MyDebug", "SignInActivity: onChildAdded:" + dataSnapshot.getKey());
+        ((EventsApplication)getApplication()).getFirebaseController().setCurrentUserId(dataSnapshot.getKey());
+
+        ((EventsApplication)getApplication()).getFirebaseController()
+                .getRoot().child("users").orderByChild("googleAuthToken")
+                .equalTo(listenerToken).removeEventListener(this);
+
+        // user found no need to input details go to main activity
+        Intent intent = new Intent(this, MapActivity.class);
+        finish();
+        startActivity(intent);
+    }
+
+    @Override
+    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+    }
+    @Override
+    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+    }
+    @Override
+    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+    }
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+        Exception e = databaseError.toException();
+        e.printStackTrace();
+        Log.d("MyDebug", "UserFindError" + databaseError.getDetails());
     }
 }
