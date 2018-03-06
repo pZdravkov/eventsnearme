@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.group14.events_near_me.Comment;
-import com.group14.events_near_me.Event;
 import com.group14.events_near_me.R;
 
 import java.text.SimpleDateFormat;

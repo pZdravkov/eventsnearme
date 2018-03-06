@@ -1,9 +1,5 @@
 package com.group14.events_near_me;
 
-import android.content.SharedPreferences;
-import android.provider.ContactsContract;
-import android.util.Log;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
