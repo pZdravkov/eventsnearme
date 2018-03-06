@@ -6,5 +6,12 @@
     <string name="preference_id_key">userID</string>
     <string name="signin_activity_welcome_msg">Welcome to</string>
     <string name="title">EvenTribute</string>
-    <string name="singin_activity_age_msg">Select Your Age:</string>
+    <string name="confirm">Confirm</string>
+    <string name="signin_age_select">Select your date of birth:</string>
+    <string name="signin_gender_select">Select your gender:</string>
+    <string name="gender_switch_off">female</string>
+    <string name="gender_switch_on">male</string>
+    <string name="title_activity_event_view">EventViewActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
