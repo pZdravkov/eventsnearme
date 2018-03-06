@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.group14.events_near_me">
+
     <application
         android:name=".EventsApplication"
         android:allowBackup="true"
@@ -28,12 +29,13 @@
         <activity
             android:name=".event_view.EventViewActivity"
             android:label="@string/title_activity_event_view"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ListActivity">
+            android:parentActivityName=".ListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ListActivity" />
         </activity>
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
