@@ -2,7 +2,6 @@ package com.group14.events_near_me;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -51,6 +49,8 @@ public class EventListAdapter extends ArrayAdapter<String> {
 
         // get the event by querying the hashmap for the ID
         Event e = events.get(eventNames.get(position));
+
+        ((TextView)row.findViewById(R.id.eventListName)).setText(e.name);
 
         // convert the times from milliseconds into a human readable form
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.UK);

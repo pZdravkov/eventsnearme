@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,6 +32,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FirebaseController firebase;
     private GoogleMap map;
     private GestureDetector gestureDetector;
+    private boolean addingEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +40,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         firebase = ((EventsApplication)this.getApplication()).getFirebaseController();
+        addingEvent = false;
 
         // start the background task of getting a google map
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         gestureDetector = new GestureDetector(this, this);
+
+        findViewById(R.id.mapAddFAB).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (addingEvent) {
+                    addingEvent = false;
+                    Toast.makeText(getApplicationContext(), "No longer adding an event", Toast.LENGTH_SHORT).show();
+                } else {
+                    addingEvent = true;
+                    Toast.makeText(getApplicationContext(), "Tap on the map where to add an event", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -62,16 +79,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapClick(LatLng latLng) {
-        // when the user clicks on the map in an empty spot create an event there
+        // when the user clicks on the map check if they're trying to add an event, if so launch event creation activity
         // TODO change this, it's just for testing
         Log.d("MyDebug", "clicked on map");
-        String key = firebase.getDatabase().getReference().child("events").push().getKey();
-        Calendar calendar = Calendar.getInstance();
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.roll(Calendar.HOUR_OF_DAY, true);
-        Event event = new Event((float)latLng.latitude, (float)latLng.longitude,
-                calendar.getTimeInMillis(), calendar2.getTimeInMillis(), firebase.getCurrentUserId());
-        firebase.getRoot().child("events").child(key).setValue(event);
+        if (addingEvent) {
+            Intent intent = new Intent(this, AddEventActivity.class);
+            intent.putExtra("lat", latLng.latitude);
+            intent.putExtra("lng", latLng.longitude);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
