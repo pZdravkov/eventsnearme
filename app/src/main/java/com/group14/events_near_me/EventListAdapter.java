@@ -50,6 +50,8 @@ public class EventListAdapter extends ArrayAdapter<String> {
         // get the event by querying the hashmap for the ID
         Event e = events.get(eventNames.get(position));
 
+        ((TextView)row.findViewById(R.id.eventListName)).setText(e.name);
+
         // convert the times from milliseconds into a human readable form
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.UK);
 
