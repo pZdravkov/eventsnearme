@@ -131,11 +131,11 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
     public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
         Log.d("MyDebug", "ProfileList: onChildAdded:" + dataSnapshot.getKey());
 
-        Signup signup = dataSnapshot.getValue(Signup.class);
+        SignUp signUp = dataSnapshot.getValue(SignUp.class);
 
-        // for the signup create a single fire listener to get event information
+        // for the sign up create a single fire listener to get event information
         ((EventsApplication)getApplication()).getFirebaseController()
-                .getDatabase().getReference("/events/" + signup.eventID)
+                .getDatabase().getReference("/events/" + signUp.eventID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -163,11 +163,11 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
     public void onChildRemoved(DataSnapshot dataSnapshot) {
         Log.d("MyDebug", "ProfileList: onChildRemoved:" + dataSnapshot.getKey());
 
-        Signup signup = dataSnapshot.getValue(Signup.class);
+        SignUp signUp = dataSnapshot.getValue(SignUp.class);
 
         // for the signup create a single fire listener to get event information
         ((EventsApplication)getApplication()).getFirebaseController()
-                .getDatabase().getReference("/events/" + signup.eventID)
+                .getDatabase().getReference("/events/" + signUp.eventID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
