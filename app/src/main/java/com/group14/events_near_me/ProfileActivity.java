@@ -46,7 +46,6 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
                 Intent intent = new Intent(ProfileActivity.this, EventViewActivity.class);
                 intent.putExtra("EventID", eventID);
                 startActivity(intent);
-                finish();
             }
         });
 

@@ -43,6 +43,15 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        ((EventsApplication)getActivity().getApplication()).getFirebaseController()
+                .getRoot().child("signups").orderByChild("eventID")
+                .equalTo(eventID).removeEventListener(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_event_view_attending, null);
     }
@@ -52,7 +61,6 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
         Intent intent = new Intent(EventViewAttendingFragment.this.getActivity(), ProfileActivity.class);
         intent.putExtra("UserID", signUps.get(pos).userID);
         startActivity(intent);
-        EventViewAttendingFragment.this.getActivity().finish();
     }
 
     @Override

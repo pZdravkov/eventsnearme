@@ -50,7 +50,6 @@ public class ListActivity extends AppCompatActivity implements ChildEventListene
                 Intent intent = new Intent(ListActivity.this, EventViewActivity.class);
                 intent.putExtra("EventID", eventID);
                 startActivity(intent);
-                finish();
             }
         });
 

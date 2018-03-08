@@ -137,8 +137,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         // user found no need to input details go to main activity
         Intent intent = new Intent(this, MapActivity.class);
-        finish();
         startActivity(intent);
+        finish();
     }
 
     @Override
