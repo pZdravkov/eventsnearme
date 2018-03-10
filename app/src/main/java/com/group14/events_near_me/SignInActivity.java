@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -74,7 +73,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 User user = new User(account.getGivenName(), account.getFamilyName(), gender, dateOfBirth.getTimeInMillis(), account.getIdToken());
                 ((EventsApplication)this.getApplication()).getFirebaseController().addUser(user);
 
-                Intent intent = new Intent(this, MapActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 finish();
                 startActivity(intent);
         }
@@ -136,7 +135,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .equalTo(listenerToken).removeEventListener(this);
 
         // user found no need to input details go to main activity
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
