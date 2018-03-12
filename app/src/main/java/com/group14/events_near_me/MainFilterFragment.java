@@ -1,8 +1,6 @@
 package com.group14.events_near_me;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -18,6 +18,8 @@ import java.util.HashMap;
 public class MainFilterFragment extends Fragment implements View.OnClickListener {
     private HashMap<String, Event> events;
     private ArrayList<String> eventNames;
+    // true for sort by distance, false for sort by start time
+    private boolean sortByDistance = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,12 +37,51 @@ public class MainFilterFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
+    public void sort() {
+        final Location userLocation;
+        try {
+            userLocation = ((MainActivity) getActivity()).getLocation();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return;
+        }
+        if (sortByDistance) {
+            Collections.sort(eventNames, new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    Event eventFirst = events.get(s);
+                    Event eventSecond = events.get(t1);
+
+                    float[] resultFirst = new float[1];
+                    Location.distanceBetween(userLocation.getLatitude(), userLocation.getLongitude(), eventFirst.lat, eventFirst.lng, resultFirst);
+                    float[] resultSecond = new float[1];
+                    Location.distanceBetween(userLocation.getLatitude(), userLocation.getLongitude(), eventSecond.lat, eventSecond.lng, resultSecond);
+                    return (int)(resultFirst[0] - resultSecond[0]);
+                }
+            });
+        } else {
+            Collections.sort(eventNames, new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    Event eventFirst = events.get(s);
+                    Event eventSecond = events.get(t1);
+
+                    return (int)(eventFirst.startTime - eventSecond.startTime);
+                }
+            });
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.MainFilterDistance:
+                sortByDistance = true;
+                ((MainActivity)getActivity()).updateFragments();
                 break;
             case R.id.MainFilterStart:
+                sortByDistance = false;
+                ((MainActivity)getActivity()).updateFragments();
                 break;
         }
     }

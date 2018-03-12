@@ -1,6 +1,7 @@
 package com.group14.events_near_me;
 
 import android.content.Intent;
+import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -79,6 +81,13 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
             markerOptions.title(s);
             map.addMarker(markerOptions);
         }
+
+        Location location = ((MainActivity)getActivity()).getLocation();
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+        markerOptions.title("Your location");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        map.addMarker(markerOptions);
     }
 
     @Override
@@ -104,9 +113,17 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Intent intent = new Intent(getActivity(), EventViewActivity.class);
-        intent.putExtra("EventID", marker.getTitle());
-        startActivity(intent);
-        return true;
+        // search for if the marker is an event marker, indicated by its name being stored in eventnames
+        for (String s : eventNames) {
+            if (marker.getTitle().equals(s)) {
+                Intent intent = new Intent(getActivity(), EventViewActivity.class);
+                intent.putExtra("EventID", marker.getTitle());
+                startActivity(intent);
+                addingEvent = false;
+                return true;
+            }
+        }
+        // if not perform don't consume the event, allowing default action to occur
+        return false;
     }
 }
