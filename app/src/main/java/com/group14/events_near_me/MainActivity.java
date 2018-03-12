@@ -28,7 +28,7 @@ public class MainActivity extends FragmentActivity implements ChildEventListener
         // add each of the three fragments to the adapter
         fragments.add(new MainMapFragment());
         fragments.add(new MainListFragment());
-        //fragments.add(new MainFilterFragment());
+        fragments.add(new MainFilterFragment());
 
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -39,7 +39,7 @@ public class MainActivity extends FragmentActivity implements ChildEventListener
             @Override
             public int getCount() {
                 // this will always be 3 as there are 3 fragments
-                return 2;
+                return 3;
             }
         };
 

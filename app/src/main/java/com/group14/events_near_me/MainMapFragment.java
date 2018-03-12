@@ -45,7 +45,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_map, null);
+        View view = inflater.inflate(R.layout.fragment_main_map, null);
 
         // start the background task of getting a google map
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
