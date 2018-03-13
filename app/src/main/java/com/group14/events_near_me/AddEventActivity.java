@@ -1,10 +1,8 @@
 package com.group14.events_near_me;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -66,8 +64,6 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
                 .getDatabase().getReference().child("events").push().getKey();
         ((EventsApplication)getApplication()).getFirebaseController().getRoot().child("events").child(key).setValue(e);
 
-        Intent intent = new Intent(this, MapActivity.class);
-        startActivity(intent);
         finish();
     }
 }

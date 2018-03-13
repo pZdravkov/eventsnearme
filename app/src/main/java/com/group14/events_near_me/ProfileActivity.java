@@ -38,13 +38,6 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
         list = findViewById(R.id.profileEvents);
         list.setAdapter(new EventListAdapter(this, R.layout.events_list_line, eventNames, events));
 
-        // register a listener for events
-        ((EventsApplication)getApplication()).getFirebaseController()
-                .getRoot().child("signups").orderByChild("userID")
-                .equalTo(((EventsApplication)getApplication())
-                        .getFirebaseController().getCurrentUserId())
-                .addChildEventListener(this);
-
         // when an event is clicked get the ID of that event and pass it to the EventViewActivity
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,7 +46,6 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
                 Intent intent = new Intent(ProfileActivity.this, EventViewActivity.class);
                 intent.putExtra("EventID", eventID);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -101,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
                 Long today = Calendar.getInstance().getTimeInMillis();
                 // thats the number of milliseconds in a year
                 Long age = (today - millis)/31556952000L;
-                ((TextView)findViewById(R.id.profileGender)).setText(age.toString());
+                ((TextView)findViewById(R.id.profileAge)).setText(age.toString());
             }
 
             @Override
@@ -122,9 +114,7 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
         // remove listener
         ((EventsApplication)getApplication()).getFirebaseController().getRoot()
                 .child("signups").orderByChild("userID")
-                .equalTo(((EventsApplication)getApplication())
-                        .getFirebaseController().getCurrentUserId())
-                .removeEventListener(this);
+                .equalTo(userID).removeEventListener(this);
     }
 
     @Override
