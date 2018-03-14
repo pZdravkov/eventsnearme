@@ -50,12 +50,13 @@ public class EventViewSignUpFragment extends Fragment {
         // get properties to put into table
         String userID = ((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId();
         String eventID = ((EventViewActivity)getActivity()).getEventID();
+        String name = ((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserName();
 
         // generate timestamp of current time. getInstance will give a calendar of current time
         Calendar calendar = Calendar.getInstance();
         long timestamp = calendar.getTimeInMillis();
 
-        SignUp signup = new SignUp(eventID, userID, timestamp);
+        SignUp signup = new SignUp(eventID, userID, timestamp, name);
         ref.child(key).setValue(signup);
 
         isSignedUp = true;

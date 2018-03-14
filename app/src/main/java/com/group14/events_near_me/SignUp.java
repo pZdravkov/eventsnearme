@@ -7,17 +7,20 @@ package com.group14.events_near_me;
  */
 
 public class SignUp {
-    public String eventID;
+    private String eventID;
     public String userID;
-    public long timestamp;
+    private long timestamp;
+    public String name;
 
     public SignUp() {
 
     }
 
-    public SignUp(String eventID, String userID, long timestamp) {
+    public SignUp(String eventID, String userID, long timestamp, String name) {
         this.eventID = eventID;
         this.userID = userID;
         this.timestamp = timestamp;
+        this.name = name;
     }
+
 }

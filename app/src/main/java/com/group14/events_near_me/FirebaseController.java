@@ -1,5 +1,7 @@
 package com.group14.events_near_me;
 
+import android.util.Log;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +36,6 @@ public class FirebaseController {
     public String addUser(User user) {
         currentUserId = ref.child("users").push().getKey();
         ref.child("users").child(currentUserId).setValue(user);
-
         return currentUserId;
     }
 
@@ -45,6 +46,8 @@ public class FirebaseController {
     public String getCurrentUserId() {
         return currentUserId;
     }
+
+    public String getCurrentUserName() { return firebaseAuth.getCurrentUser().getDisplayName(); }
 
     public FirebaseDatabase getDatabase() {
         return database;

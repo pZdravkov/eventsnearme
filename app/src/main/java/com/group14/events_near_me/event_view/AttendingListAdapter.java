@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.group14.events_near_me.FirebaseController;
 import com.group14.events_near_me.R;
 import com.group14.events_near_me.SignUp;
 
@@ -42,7 +46,8 @@ public class AttendingListAdapter extends ArrayAdapter<SignUp> {
         }
 
         SignUp signUp = signUps.get(position);
-        ((TextView)row.findViewById(R.id.attendingName)).setText(signUp.userID);
+
+        ((TextView)row.findViewById(R.id.attendingName)).setText(signUp.name);
 
         return row;
     }
