@@ -15,21 +15,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".33"
+            android:layout_weight=".25"
             android:gravity="start"
+            android:text="Event Name: " />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:gravity="center"
             android:text="Event Start Time: " />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".33"
+            android:layout_weight=".25"
             android:gravity="center"
             android:text="Event End Time: " />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".33"
+            android:layout_weight=".25"
             android:gravity="end"
             android:text="Event Location: " />
     </LinearLayout>
@@ -37,5 +44,5 @@
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 </LinearLayout>
