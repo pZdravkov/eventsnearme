@@ -68,7 +68,7 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
         // add new sign up to list of sign ups then update listView
         SignUp signUp = dataSnapshot.getValue(SignUp.class);
         signUps.add(signUp);
-        getListView().invalidateViews();
+        ((AttendingListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
                 signUps.remove(x);
             }
         }
-        getListView().invalidateViews();
+        ((AttendingListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override
