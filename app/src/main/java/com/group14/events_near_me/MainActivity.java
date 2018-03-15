@@ -1,9 +1,7 @@
 package com.group14.events_near_me;
 
-import android.*;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,9 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -36,25 +33,14 @@ public class MainActivity extends FragmentActivity implements ChildEventListener
         setContentView(R.layout.activity_main);
 
         // add each of the three fragments to the adapter
-        fragments.add(new MainMapFragment());
-        fragments.add(new MainListFragment());
-        fragments.add(new MainFilterFragment());
-
-        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                // this will always be 3 as there are 3 fragments
-                return 3;
-            }
-        };
-
-        ViewPager viewPager = findViewById(R.id.mainViewPager);
-        viewPager.setAdapter(fragmentPagerAdapter);
+        fragments.add(getSupportFragmentManager().findFragmentById(R.id.mainMapFragmentContainer));
+        fragments.add(getSupportFragmentManager().findFragmentById(R.id.mainListFragmentContainer));
+        fragments.add(getSupportFragmentManager().findFragmentById(R.id.mainFilterFragmentContainer));
+        /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.mainMapFragmentContainer, fragments.get(0));
+        transaction.replace(R.id.mainFilterFragmentContainer, fragments.get(2));
+        transaction.replace(R.id.mainListFragmentContainer, fragments.get(1));
+        transaction.commit();*/
 
         // TODO make this less obnoxious
         while (ContextCompat.checkSelfPermission(this,
