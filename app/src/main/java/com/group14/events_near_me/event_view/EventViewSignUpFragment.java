@@ -42,11 +42,6 @@ public class EventViewSignUpFragment extends Fragment implements ValueEventListe
         ((EventsApplication)getActivity().getApplication()).getFirebaseController().getRoot().child("signups")
                 .addListenerForSingleValueEvent(this);
 
-        if(attending) {
-            view.findViewById(R.id.isAttending).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.signUp).setEnabled(false);
-        }
-
         view.findViewById(R.id.signUp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
