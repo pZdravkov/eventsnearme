@@ -7,7 +7,7 @@ package com.group14.events_near_me;
  */
 
 public class SignUp {
-    private String eventID;
+    public String eventID;
     public String userID;
     private long timestamp;
     public String name;
