@@ -35,7 +35,7 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
         eventID = ((EventViewActivity)getActivity()).getEventID();
 
         // set list adapter for attending list
-        setListAdapter(new AttendingListAdapter(getContext(), R.layout.event_attending_list_line, signUps));
+        setListAdapter(new AttendingListAdapter(getContext(), R.layout.event_attending_list_line, signUps, (EventsApplication)getActivity().getApplication()));
 
         ((EventsApplication)getActivity().getApplication()).getFirebaseController()
                 .getRoot().child("signups").orderByChild("eventID")
