@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.group14.events_near_me.event_view.EventViewActivity;
+import com.group14.events_near_me.event_view.EventViewFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,9 +116,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         // search for if the marker is an event marker, indicated by its name being stored in eventnames
         for (String s : eventNames) {
             if (marker.getTitle().equals(s)) {
-                Intent intent = new Intent(getActivity(), EventViewActivity.class);
-                intent.putExtra("EventID", marker.getTitle());
-                startActivity(intent);
+                ((MainActivity)getActivity()).displayEventView(marker.getTitle());
                 addingEvent = false;
                 return true;
             }

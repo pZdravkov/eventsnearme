@@ -6,7 +6,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.group14.events_near_me.MainActivity;
 import com.group14.events_near_me.R;
 
 import java.util.ArrayList;
@@ -16,18 +20,12 @@ import java.util.ArrayList;
  *
  * this activity produces the viewpager to the 3 fragments that make up viewing an event
  */
-public class EventViewActivity extends FragmentActivity {
+public class EventViewFragment extends Fragment {
     private ArrayList<Fragment> fragments;
-    private String eventID;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_view);
-
-        // get what event to work with from the intent
-        eventID = getIntent().getStringExtra("EventID");
-        Log.d("MyDebug", eventID);
 
         fragments = new ArrayList<>();
 
@@ -36,7 +34,14 @@ public class EventViewActivity extends FragmentActivity {
         fragments.add(new EventViewAttendingFragment());
         fragments.add(new EventViewSignUpFragment());
 
-        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_event_view, null);
+
+        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return fragments.get(position);
@@ -49,15 +54,13 @@ public class EventViewActivity extends FragmentActivity {
             }
         };
 
-        ViewPager viewPager = findViewById(R.id.eventViewPager);
+        ViewPager viewPager = view.findViewById(R.id.eventViewPager);
         viewPager.setAdapter(fragmentPagerAdapter);
+
+        return view;
     }
 
     public void setSignedUp() {
         ((EventViewSignUpFragment)fragments.get(2)).setSignedUp();
-    }
-
-    public String getEventID() {
-        return eventID;
     }
 }

@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.firebase.database.DatabaseReference;
 import com.group14.events_near_me.EventsApplication;
+import com.group14.events_near_me.MainActivity;
 import com.group14.events_near_me.R;
 import com.group14.events_near_me.SignUp;
 
@@ -50,7 +50,7 @@ public class EventViewSignUpFragment extends Fragment {
 
         // get properties to put into table
         String userID = ((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId();
-        String eventID = ((EventViewActivity)getActivity()).getEventID();
+        String eventID = ((MainActivity)getActivity()).getViewedEventID();
 
         // generate timestamp of current time. getInstance will give a calendar of current time
         Calendar calendar = Calendar.getInstance();
