@@ -134,7 +134,7 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
                 events.put(dataSnapshot.getKey(), event);
                 eventNames.add(dataSnapshot.getKey());
                 // force the list to redraw itself with the new event
-                list.invalidateViews();
+                ((EventListAdapter)list.getAdapter()).notifyDataSetChanged();
             }
 
             @Override
@@ -175,7 +175,7 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
                             }
                         }
                         // redraw the list without the event
-                        list.invalidateViews();
+                        ((EventListAdapter)list.getAdapter()).notifyDataSetChanged();
                     }
 
                     @Override

@@ -10,17 +10,13 @@ public class SignUp {
     public String eventID;
     public String userID;
     private long timestamp;
-    public String name;
 
     public SignUp() {
 
     }
-
-    public SignUp(String eventID, String userID, long timestamp, String name) {
+    public SignUp(String eventID, String userID, long timestamp) {
         this.eventID = eventID;
         this.userID = userID;
         this.timestamp = timestamp;
-        this.name = name;
     }
-
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,25 +23,18 @@ import java.util.Calendar;
  * Created by Ben on 05/03/2018.
  */
 
-public class EventViewSignUpFragment extends Fragment implements ValueEventListener {
+public class EventViewSignUpFragment extends Fragment {
 
-
-    String userID = null;
-    String eventID = null;
-
-    boolean attending = false;
+    private boolean attending = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event_view_sign_up, null);
 
-        userID = ((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId();
-        eventID = ((EventViewActivity)getActivity()).getEventID();
-
-
-        // check firebase if user has signed up to this event
-        ((EventsApplication)getActivity().getApplication()).getFirebaseController().getRoot().child("signups")
-                .addListenerForSingleValueEvent(this);
+        if(attending) {
+            view.findViewById(R.id.isAttending).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.signUp).setEnabled(false);
+        }
 
         view.findViewById(R.id.signUp).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,32 +52,25 @@ public class EventViewSignUpFragment extends Fragment implements ValueEventListe
 
         String key = ref.push().getKey();
 
-        String name = ((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserName();
+        // get properties to put into table
+        String userID = ((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId();
+        String eventID = ((EventViewActivity)getActivity()).getEventID();
+
         long timestamp = Calendar.getInstance().getTimeInMillis();
 
-        SignUp signup = new SignUp(eventID, userID, timestamp, name);
+        SignUp signup = new SignUp(eventID, userID, timestamp);
         ref.child(key).setValue(signup);
 
-    }
-    private void setAttending(){
-        Log.v("setAttending()", "user is attending this event");
-        getActivity().findViewById(R.id.isAttending).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.signUp).setEnabled(false);
-    }
+        attending = true;
 
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        for(DataSnapshot signup: dataSnapshot.getChildren()) {
-            if (signup.child("userID").getValue().toString().equals(userID) &&
-                    signup.child("eventID").getValue().toString().equals(eventID)) {
-                // user is signed up to event
-                setAttending();
-            }
+    }
+    public void setAttending(){
+        this.attending = true;
+        try {
+            getActivity().findViewById(R.id.isAttending).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.signUp).setEnabled(false);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-
     }
 }

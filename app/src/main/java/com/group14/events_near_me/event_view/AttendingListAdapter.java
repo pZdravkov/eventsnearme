@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.group14.events_near_me.EventsApplication;
 import com.group14.events_near_me.FirebaseController;
 import com.group14.events_near_me.R;
 import com.group14.events_near_me.SignUp;
@@ -23,21 +24,23 @@ import java.util.ArrayList;
 
 public class AttendingListAdapter extends ArrayAdapter<SignUp> {
 
+    private EventsApplication app;
     private Context context;
     private int resourceId;
     private ArrayList<SignUp> signUps;
 
-    public AttendingListAdapter(Context context, int layoutResourceId, ArrayList<SignUp> signUps) {
+    public AttendingListAdapter(Context context, int layoutResourceId, ArrayList<SignUp> signUps, EventsApplication app) {
         super(context, layoutResourceId, signUps);
         this.context = context;
         this.resourceId = layoutResourceId;
         this.signUps = signUps;
+        this.app = app;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-        View row;
+        final View row;
 
         if (convertView != null){
             row = convertView;
@@ -46,8 +49,9 @@ public class AttendingListAdapter extends ArrayAdapter<SignUp> {
         }
 
         SignUp signUp = signUps.get(position);
-
-        ((TextView)row.findViewById(R.id.attendingName)).setText(signUp.name);
+        TextView textView = (TextView)row.findViewById(R.id.attendingName);
+        textView.setText("Loading Loading");
+        app.getFirebaseController().setTextViewToName(textView, signUp.userID);
 
         return row;
     }

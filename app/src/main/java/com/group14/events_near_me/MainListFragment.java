@@ -47,6 +47,6 @@ public class MainListFragment extends ListFragment {
     }
 
     public void updateList() {
-        getListView().invalidateViews();
+        ((EventListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 }

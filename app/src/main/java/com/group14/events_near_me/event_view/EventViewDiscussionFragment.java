@@ -112,7 +112,7 @@ public class EventViewDiscussionFragment extends ListFragment implements ChildEv
         // add new comment to list of comments then update listView
         Comment comment = dataSnapshot.getValue(Comment.class);
         comments.add(comment);
-        getListView().invalidateViews();
+        ((CommentListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -132,7 +132,7 @@ public class EventViewDiscussionFragment extends ListFragment implements ChildEv
                 comments.remove(x);
             }
         }
-        getListView().invalidateViews();
+        ((CommentListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.group14.events_near_me.EventsApplication;
 import com.group14.events_near_me.R;
 
 import java.util.ArrayList;
@@ -56,4 +57,6 @@ public class EventViewActivity extends FragmentActivity {
     public String getEventID() {
         return eventID;
     }
+
+    public void setSignedUp() { ((EventViewSignUpFragment)fragments.get(2)).setAttending(); }
 }

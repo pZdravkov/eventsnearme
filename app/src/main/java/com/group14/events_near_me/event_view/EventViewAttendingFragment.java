@@ -35,7 +35,7 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
         eventID = ((EventViewActivity)getActivity()).getEventID();
 
         // set list adapter for attending list
-        setListAdapter(new AttendingListAdapter(getContext(), R.layout.event_attending_list_line, signUps));
+        setListAdapter(new AttendingListAdapter(getContext(), R.layout.event_attending_list_line, signUps, (EventsApplication)getActivity().getApplication()));
 
         ((EventsApplication)getActivity().getApplication()).getFirebaseController()
                 .getRoot().child("signups").orderByChild("eventID")
@@ -68,7 +68,12 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
         // add new sign up to list of sign ups then update listView
         SignUp signUp = dataSnapshot.getValue(SignUp.class);
         signUps.add(signUp);
-        getListView().invalidateViews();
+
+        ((AttendingListAdapter)getListAdapter()).notifyDataSetChanged();
+
+        if (signUp != null && signUp.userID.equals(((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId())) {
+            ((EventViewActivity)getActivity()).setSignedUp();
+        }
     }
 
     @Override
@@ -85,7 +90,7 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
                 signUps.remove(x);
             }
         }
-        getListView().invalidateViews();
+        ((AttendingListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override
