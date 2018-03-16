@@ -53,6 +53,10 @@ public class EventViewActivity extends FragmentActivity {
         viewPager.setAdapter(fragmentPagerAdapter);
     }
 
+    public void setSignedUp() {
+        ((EventViewSignUpFragment)fragments.get(2)).setSignedUp();
+    }
+
     public String getEventID() {
         return eventID;
     }

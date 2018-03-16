@@ -69,6 +69,10 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
         SignUp signUp = dataSnapshot.getValue(SignUp.class);
         signUps.add(signUp);
         ((AttendingListAdapter)getListAdapter()).notifyDataSetChanged();
+
+        if (signUp.userID.equals(((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId())) {
+            ((EventViewActivity)getActivity()).setSignedUp();
+        }
     }
 
     @Override

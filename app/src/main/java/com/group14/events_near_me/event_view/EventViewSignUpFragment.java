@@ -40,6 +40,7 @@ public class EventViewSignUpFragment extends Fragment {
 
         return view;
     }
+
     public void signUpToEvent(){
 
         // get reference to signups table
@@ -61,5 +62,15 @@ public class EventViewSignUpFragment extends Fragment {
         isSignedUp = true;
 
 
+    }
+
+    public void setSignedUp() {
+        this.isSignedUp = true;
+        try {
+            getView().findViewById(R.id.isAttending).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.signUp).setEnabled(false);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }
