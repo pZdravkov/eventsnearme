@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -90,11 +91,25 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         map.addMarker(markerOptions);
     }
 
+    public void moveCameraToEvent(String eventID) {
+        if (map == null) {
+            return;
+        }
+
+        Event event = events.get(eventID);
+        LatLng latLng = new LatLng(event.lat, event.lng);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.setOnMapClickListener(this);
         map.setOnMarkerClickListener(this);
+
+        Location location = ((MainActivity)getActivity()).getLocation();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
+
         updateMarkers();
     }
 

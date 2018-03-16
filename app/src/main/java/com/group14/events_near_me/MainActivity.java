@@ -30,15 +30,11 @@ public class MainActivity extends FragmentActivity implements ChildEventListener
     private Location location;
     private LocationManager locationManager;
     private String viewedEventID;
-    private boolean showingEvent;
-    private EventViewFragment eventViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        showingEvent = false;
 
         // add each of the three fragments to the adapter
         /*fragments.add(getSupportFragmentManager().findFragmentById(R.id.mainMapFragmentContainer));
@@ -49,8 +45,8 @@ public class MainActivity extends FragmentActivity implements ChildEventListener
         fragments.add(new MainFilterFragment());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.mainMapFragmentContainer, fragments.get(0));
-        transaction.replace(R.id.mainFilterFragmentContainer, fragments.get(2));
-        transaction.replace(R.id.mainListFragmentContainer, fragments.get(1));
+        transaction.add(R.id.mainListFragmentContainer, fragments.get(2));
+        transaction.add(R.id.mainListFragmentContainer, fragments.get(1));
         transaction.commit();
 
         // TODO make this less obnoxious
@@ -101,33 +97,11 @@ public class MainActivity extends FragmentActivity implements ChildEventListener
     }
 
     public void displayEventView(String eventID) {
-        showingEvent = true;
         viewedEventID = eventID;
-        setContentView(R.layout.activity_main_event_displayed);
-
+        ((MainMapFragment)fragments.get(0)).moveCameraToEvent(eventID);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.remove(fragments.get(0));
-        transaction.remove(fragments.get(1));
-        transaction.remove(fragments.get(2));
-        fragments.set(0, new MainMapFragment());
-        eventViewFragment = new EventViewFragment();
-        transaction.replace(R.id.mainMapFragmentContainer, fragments.get(0));
-        transaction.replace(R.id.mainEventViewFragmentContainer, eventViewFragment);
-        transaction.commit();
-    }
-
-    public void removeEventView() {
-        showingEvent = false;
-        setContentView(R.layout.activity_main);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.remove(eventViewFragment);
-        fragments.set(0, new MainMapFragment());
-        fragments.set(1, new MainListFragment());
-        fragments.set(2, new MainFilterFragment());
-        transaction.replace(R.id.mainMapFragmentContainer, fragments.get(0));
-        transaction.replace(R.id.mainFilterFragmentContainer, fragments.get(2));
-        transaction.replace(R.id.mainListFragmentContainer, fragments.get(1));
+        transaction.replace(R.id.mainListFragmentContainer, new EventViewFragment());
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -196,18 +170,6 @@ public class MainActivity extends FragmentActivity implements ChildEventListener
         //Log.d("MyDebug", "location updated: " + location.getLatitude() + ", " + location.getLongitude());
         this.location = location;
         updateFragments();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (showingEvent) {
-                removeEventView();
-                return true;
-            }
-            return super.onKeyDown(keyCode, event);
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override

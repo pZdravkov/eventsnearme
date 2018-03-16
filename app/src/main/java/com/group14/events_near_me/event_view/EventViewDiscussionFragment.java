@@ -37,7 +37,7 @@ public class EventViewDiscussionFragment extends ListFragment implements ChildEv
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new CommentListAdapter(getContext(), R.layout.event_discussion_list_line, comments));
+        setListAdapter(new CommentListAdapter(getContext(), R.layout.event_discussion_list_line, comments, (EventsApplication)getActivity().getApplication()));
         // get the event ID from the activity
         eventID = ((MainActivity)getActivity()).getViewedEventID();
         // set a listener for comments with our event ID

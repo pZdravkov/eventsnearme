@@ -13,13 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.50"/>
-    <FrameLayout
-        android:id="@+id/mainFilterFragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/mainListFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.50"/>
 
 </LinearLayout>

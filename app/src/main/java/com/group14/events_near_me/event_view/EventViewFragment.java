@@ -3,6 +3,7 @@ package com.group14.events_near_me.event_view;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,15 +34,13 @@ public class EventViewFragment extends Fragment {
         fragments.add(new EventViewDiscussionFragment());
         fragments.add(new EventViewAttendingFragment());
         fragments.add(new EventViewSignUpFragment());
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_event_view, null);
 
-        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getFragmentManager()) {
+        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return fragments.get(position);
@@ -58,6 +57,16 @@ public class EventViewFragment extends Fragment {
         viewPager.setAdapter(fragmentPagerAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        for (Fragment f : fragments) {
+            transaction.remove(f);
+        }
+        transaction.commit();
     }
 
     public void setSignedUp() {
