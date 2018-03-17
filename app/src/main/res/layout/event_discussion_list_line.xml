@@ -3,12 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/discussionName"
-        android:gravity="center" />
+    android:orientation="vertical"
+    android:layout_marginBottom="30sp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,15 +12,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/discussionText"
-            android:layout_weight=".5"
-            android:gravity="start" />
+            android:id="@+id/discussionName"
+            android:gravity="start"
+            android:textSize="20sp"
+            android:layout_weight=".4"
+            />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/discussionTimestamp"
-            android:layout_weight=".5"
+            android:layout_weight=".6"
             android:gravity="end" />
+
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/discussionText" />
 
 </LinearLayout>
