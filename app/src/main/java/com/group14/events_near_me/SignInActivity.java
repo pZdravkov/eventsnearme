@@ -73,9 +73,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 User user = new User(account.getGivenName(), account.getFamilyName(), gender, dateOfBirth.getTimeInMillis(), account.getIdToken());
                 ((EventsApplication)this.getApplication()).getFirebaseController().addUser(user);
 
-                Intent intent = new Intent(this, MainActivity.class);
+                // finish this activity bringing up the default (main)
                 finish();
-                startActivity(intent);
         }
     }
 
@@ -134,9 +133,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .getRoot().child("users").orderByChild("googleAuthToken")
                 .equalTo(listenerToken).removeEventListener(this);
 
-        // user found no need to input details go to main activity
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        // user found no need to input details go to default (main) activity
         finish();
     }
 
