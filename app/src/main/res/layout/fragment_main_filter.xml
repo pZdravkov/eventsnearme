@@ -2,18 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     tools:context="com.group14.events_near_me.MainFilterFragment">
 
     <Button
         android:id="@+id/MainFilterDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10px"
         android:text="Sort by Distance" />
 
     <Button
         android:id="@+id/MainFilterStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10px"
         android:text="Sort by Start Time" />
 
 </LinearLayout>

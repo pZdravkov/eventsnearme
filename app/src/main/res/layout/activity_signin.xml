@@ -55,6 +55,7 @@
             <RadioGroup
                 android:id="@+id/genderSelectGroup"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:visibility="invisible">
                 <RadioButton
                     android:id="@+id/genderSelectMale"
