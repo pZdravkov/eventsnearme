@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.group14.events_near_me.Comment;
 import com.group14.events_near_me.EventsApplication;
+import com.group14.events_near_me.MainActivity;
 import com.group14.events_near_me.R;
 
 import java.util.ArrayList;
@@ -36,9 +37,9 @@ public class EventViewDiscussionFragment extends ListFragment implements ChildEv
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new CommentListAdapter(getContext(), R.layout.event_discussion_list_line, comments));
+        setListAdapter(new CommentListAdapter(getContext(), R.layout.event_discussion_list_line, comments, (EventsApplication)getActivity().getApplication()));
         // get the event ID from the activity
-        eventID = ((EventViewActivity)getActivity()).getEventID();
+        eventID = ((MainActivity)getActivity()).getViewedEventID();
         // set a listener for comments with our event ID
         ((EventsApplication)getActivity().getApplication()).getFirebaseController()
                 .getRoot().child("comments").orderByChild("eventID")

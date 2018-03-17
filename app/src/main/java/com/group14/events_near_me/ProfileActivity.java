@@ -14,7 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.group14.events_near_me.event_view.EventViewActivity;
+import com.group14.events_near_me.event_view.EventViewFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,12 +38,13 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
         list = findViewById(R.id.profileEvents);
         list.setAdapter(new EventListAdapter(this, R.layout.events_list_line, eventNames, events));
 
-        // when an event is clicked get the ID of that event and pass it to the EventViewActivity
+        // when an event is clicked get the ID of that event and pass it to the EventViewFragment
+        //TODO fix
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String eventID = eventNames.get(i);
-                Intent intent = new Intent(ProfileActivity.this, EventViewActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, EventViewFragment.class);
                 intent.putExtra("EventID", eventID);
                 startActivity(intent);
             }
@@ -133,7 +134,9 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
                 Event event = dataSnapshot.getValue(Event.class);
                 events.put(dataSnapshot.getKey(), event);
                 eventNames.add(dataSnapshot.getKey());
-                // force the list to redraw itself with the new event
+
+                // notify the list that a new item has been added
+
                 ((EventListAdapter)list.getAdapter()).notifyDataSetChanged();
             }
 
@@ -174,7 +177,9 @@ public class ProfileActivity extends AppCompatActivity implements ChildEventList
                                 eventNames.remove(x);
                             }
                         }
-                        // redraw the list without the event
+
+                        // notify the list that the item has been removed
+
                         ((EventListAdapter)list.getAdapter()).notifyDataSetChanged();
                     }
 

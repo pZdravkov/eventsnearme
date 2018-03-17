@@ -75,7 +75,6 @@ public class FirebaseController {
         });
     }
 
-
     public void setCurrentUserId(String id) {
         currentUserId = id;
     }

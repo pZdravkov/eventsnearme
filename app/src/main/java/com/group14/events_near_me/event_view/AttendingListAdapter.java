@@ -8,11 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.group14.events_near_me.EventsApplication;
-import com.group14.events_near_me.FirebaseController;
 import com.group14.events_near_me.R;
 import com.group14.events_near_me.SignUp;
 

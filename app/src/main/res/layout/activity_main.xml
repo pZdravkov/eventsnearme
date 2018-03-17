@@ -8,21 +8,16 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <fragment
-        android:name="com.group14.events_near_me.MainMapFragment"
+    <FrameLayout
         android:id="@+id/mainMapFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.50"/>
-    <fragment
-        android:name="com.group14.events_near_me.MainFilterFragment"
-        android:id="@+id/mainFilterFragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <fragment
-        android:name="com.group14.events_near_me.MainListFragment"
+    <LinearLayout
         android:id="@+id/mainListFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.50"/>
 
 </LinearLayout>

@@ -6,13 +6,13 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.group14.events_near_me.EventsApplication;
+import com.group14.events_near_me.MainActivity;
 import com.group14.events_near_me.ProfileActivity;
 import com.group14.events_near_me.R;
 import com.group14.events_near_me.SignUp;
@@ -32,7 +32,7 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
         super.onCreate(savedInstanceState);
 
         // retrieve event id
-        eventID = ((EventViewActivity)getActivity()).getEventID();
+        eventID = ((MainActivity)getActivity()).getViewedEventID();
 
         // set list adapter for attending list
         setListAdapter(new AttendingListAdapter(getContext(), R.layout.event_attending_list_line, signUps, (EventsApplication)getActivity().getApplication()));
@@ -71,8 +71,8 @@ public class EventViewAttendingFragment extends ListFragment implements ChildEve
 
         ((AttendingListAdapter)getListAdapter()).notifyDataSetChanged();
 
-        if (signUp != null && signUp.userID.equals(((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId())) {
-            ((EventViewActivity)getActivity()).setSignedUp();
+        if (signUp.userID.equals(((EventsApplication)getActivity().getApplication()).getFirebaseController().getCurrentUserId())) {
+            ((EventViewFragment)getParentFragment()).setSignedUp();
         }
     }
 

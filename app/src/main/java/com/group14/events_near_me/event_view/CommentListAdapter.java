@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.group14.events_near_me.Comment;
+import com.group14.events_near_me.EventsApplication;
 import com.group14.events_near_me.R;
 
 import java.text.SimpleDateFormat;
@@ -27,12 +28,14 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
     private Context context;
     private ArrayList<Comment> comments;
     private int layoutResourceId;
+    private EventsApplication app;
 
-    public CommentListAdapter(Context context, int layoutResourceId, ArrayList<Comment> comments) {
+    public CommentListAdapter(Context context, int layoutResourceId, ArrayList<Comment> comments, EventsApplication app) {
         super(context, layoutResourceId, comments);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
         this.comments = comments;
+        this.app = app;
     }
 
     @Override
@@ -49,7 +52,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
         Comment comment = comments.get(position);
 
         // set comment text and body
-        ((TextView)row.findViewById(R.id.discussionName)).setText(comment.userID);
+        TextView textView = row.findViewById(R.id.discussionName);
+        textView.setText("Loading Loading");
+        app.getFirebaseController().setTextViewToName(textView, comment.userID);
+
         ((TextView)row.findViewById(R.id.discussionText)).setText(comment.body);
 
         // convert time, stored in milliseconds, into a readable form

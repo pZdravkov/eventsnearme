@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.group14.events_near_me.event_view.EventViewActivity;
+import com.group14.events_near_me.event_view.EventViewFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,10 +40,7 @@ public class MainListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int pos, long id) {
-        String eventID = eventNames.get(pos);
-        Intent intent = new Intent(getActivity(), EventViewActivity.class);
-        intent.putExtra("EventID", eventID);
-        startActivity(intent);
+        ((MainActivity)getActivity()).displayEventView(eventNames.get(pos));
     }
 
     public void updateList() {
