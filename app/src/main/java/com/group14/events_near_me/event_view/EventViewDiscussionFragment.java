@@ -2,7 +2,6 @@ package com.group14.events_near_me.event_view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.group14.events_near_me.Comment;
 import com.group14.events_near_me.EventsApplication;
+import com.group14.events_near_me.MainActivity;
 import com.group14.events_near_me.R;
 
 import java.util.ArrayList;
@@ -38,9 +37,9 @@ public class EventViewDiscussionFragment extends ListFragment implements ChildEv
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new CommentListAdapter(getContext(), R.layout.event_discussion_list_line, comments));
+        setListAdapter(new CommentListAdapter(getContext(), R.layout.event_discussion_list_line, comments, (EventsApplication)getActivity().getApplication()));
         // get the event ID from the activity
-        eventID = ((EventViewActivity)getActivity()).getEventID();
+        eventID = ((MainActivity)getActivity()).getViewedEventID();
         // set a listener for comments with our event ID
         ((EventsApplication)getActivity().getApplication()).getFirebaseController()
                 .getRoot().child("comments").orderByChild("eventID")
@@ -114,7 +113,7 @@ public class EventViewDiscussionFragment extends ListFragment implements ChildEv
         // add new comment to list of comments then update listView
         Comment comment = dataSnapshot.getValue(Comment.class);
         comments.add(comment);
-        getListView().invalidateViews();
+        ((CommentListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -134,7 +133,7 @@ public class EventViewDiscussionFragment extends ListFragment implements ChildEv
                 comments.remove(x);
             }
         }
-        getListView().invalidateViews();
+        ((CommentListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override

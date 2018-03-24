@@ -7,8 +7,9 @@ package com.group14.events_near_me;
  */
 
 public class Event {
-    public float lat;
-    public float lng;
+    public String name;
+    public double lat;
+    public double lng;
     public long startTime;
     public long endTime;
     public String ownerID;
@@ -17,7 +18,8 @@ public class Event {
 
     }
 
-    public Event(float lat, float lng, long startTime, long endTime, String ownerID) {
+    public Event(String name, double lat, double lng, long startTime, long endTime, String ownerID) {
+        this.name = name;
         this.lat = lat;
         this.lng = lng;
         this.startTime = startTime;

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.group14.events_near_me">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".EventsApplication"
         android:allowBackup="true"
@@ -17,23 +20,17 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".SignInActivity">
+        <activity android:name=".SignInActivity"
+            android:noHistory="true">
+        </activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".AddEventActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MapActivity" />
-        <activity android:name=".ListActivity" />
-        <activity
-            android:name=".event_view.EventViewActivity"
-            android:label="@string/title_activity_event_view"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ListActivity" />
         </activity>
     </application>
 

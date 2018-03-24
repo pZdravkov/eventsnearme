@@ -2,13 +2,15 @@ package com.group14.events_near_me;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.location.Address;
+import android.location.Geocoder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,8 +54,10 @@ public class EventListAdapter extends ArrayAdapter<String> {
         // get the event by querying the hashmap for the ID
         Event e = events.get(eventNames.get(position));
 
+        ((TextView)row.findViewById(R.id.eventListName)).setText(e.name);
+
         // convert the times from milliseconds into a human readable form
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.UK);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM ''YY", Locale.UK);
 
         // set the start time
         Calendar calendar = Calendar.getInstance();
@@ -66,9 +70,15 @@ public class EventListAdapter extends ArrayAdapter<String> {
         s = sdf.format(calendar.getTime());
         ((TextView)row.findViewById(R.id.eventListEndTime)).setText(s);
 
-        // set the location
-        // TODO make this a reverse geo lookup
-        ((TextView)row.findViewById(R.id.eventListLocation)).setText(e.lat + ", " + e.lng);
+        // reverse geo lookup location from latitude and longitude coordinates
+        Geocoder geo = new Geocoder(context);
+        try {
+            List<Address> matches = geo.getFromLocation(e.lat, e.lng, 1);
+            Address address = (matches.isEmpty() ? null : matches.get(0));
+            ((TextView)row.findViewById(R.id.eventListLocation)).setText(address.getLocality());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
 
         return row;
     }

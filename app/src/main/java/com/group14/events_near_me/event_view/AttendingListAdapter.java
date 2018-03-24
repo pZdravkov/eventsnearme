@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.group14.events_near_me.EventsApplication;
 import com.group14.events_near_me.R;
-import com.group14.events_near_me.User;
+import com.group14.events_near_me.SignUp;
 
 import java.util.ArrayList;
 
@@ -17,23 +18,25 @@ import java.util.ArrayList;
  * Created by marcstevens on 06/03/2018.
  */
 
-public class AttendingListAdapter extends ArrayAdapter<User> {
+public class AttendingListAdapter extends ArrayAdapter<SignUp> {
 
+    private EventsApplication app;
     private Context context;
     private int resourceId;
-    private ArrayList<User> users;
+    private ArrayList<SignUp> signUps;
 
-    public AttendingListAdapter(Context context, int layoutResourceId, ArrayList<User> users) {
-        super(context, layoutResourceId, users);
+    public AttendingListAdapter(Context context, int layoutResourceId, ArrayList<SignUp> signUps, EventsApplication app) {
+        super(context, layoutResourceId, signUps);
         this.context = context;
         this.resourceId = layoutResourceId;
-        this.users = users;
+        this.signUps = signUps;
+        this.app = app;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-        View row;
+        final View row;
 
         if (convertView != null){
             row = convertView;
@@ -41,8 +44,10 @@ public class AttendingListAdapter extends ArrayAdapter<User> {
             row = inflater.inflate(resourceId, parent, false);
         }
 
-        User user = users.get(position);
-        ((TextView)row.findViewById(R.id.attendingName)).setText(String.format("%s %s", user.firstName, user.surname));
+        SignUp signUp = signUps.get(position);
+        TextView textView = (TextView)row.findViewById(R.id.attendingName);
+        textView.setText("Loading Loading");
+        app.getFirebaseController().setTextViewToName(textView, signUp.userID);
 
         return row;
     }
